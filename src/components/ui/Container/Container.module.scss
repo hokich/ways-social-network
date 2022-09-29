@@ -1,0 +1,34 @@
+@use 'src/styles/variables.module';
+
+.container {
+  margin-left: auto;
+  margin-right: auto;
+
+  padding-right: calc(5.714% - 2.286px);
+  padding-left: calc(5.714% - 2.286px);
+
+  max-width: 1440px;
+
+  &.full {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
+  //// Mobile container
+  //@media (max-width: variables.$media-mobile-max-width) {
+  //  padding-right: 20px;
+  //  padding-left: 20px;
+  //}
+  //
+  //// Tablet container
+  //@media (min-width: variables.$media-tablet-min-width) and (max-width: variables.$media-tablet-max-width) {
+  //  padding-right: 40px;
+  //  padding-left: 40px;
+  //}
+  //
+  //// Desktop container
+  //@media (min-width: variables.$media-desktop-min-width) {
+  //  padding-right: 80px;
+  //  padding-left: 80px;
+  //}
+}
