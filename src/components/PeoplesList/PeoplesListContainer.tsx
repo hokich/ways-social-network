@@ -2,10 +2,10 @@ import {connect} from "react-redux"
 
 import {useEffect} from "react"
 
-import {setUsers, toggleIsFetching} from "../redux/slices/usersSlice"
+import {setUsers, toggleIsFetching} from "../../redux/slices/usersSlice"
 import PeoplesList from "./PeoplesList"
 import Preloader from "../icons/Preloader"
-import {RootState} from "../redux/store"
+import {RootState} from "../../redux/store"
 import {UserType} from "../../types/user.type"
 import {usersAPI} from "../../api/usersApi"
 

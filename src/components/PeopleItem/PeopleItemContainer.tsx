@@ -1,7 +1,7 @@
 import {connect} from "react-redux"
 
-import {RootState} from "../redux/store"
-import {toggleFollowingProgress, unfollow, follow} from "../redux/slices/usersSlice"
+import {RootState} from "../../redux/store"
+import {toggleFollowingProgress, unfollow, follow} from "../../redux/slices/usersSlice"
 import {usersAPI} from "../../api/usersApi"
 import PeopleItem from "./PeopleItem"
 import {UserType} from "../../types/user.type"
