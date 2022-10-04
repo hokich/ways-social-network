@@ -3,7 +3,7 @@ import styles from "./Header.module.scss"
 import {NavLink} from "react-router-dom"
 
 import Logo from "../../icons/Logo"
-import Container from "../../ui/Container";
+import Container from "../../ui/Container"
 
 interface HeaderProps {
 }

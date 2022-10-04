@@ -1,0 +1,16 @@
+@use 'src/styles/variables.module';
+
+.menu {
+  display: flex;
+  flex-direction: column;
+
+  > .link {
+    padding: 6px 8px;
+
+    color: variables.$secondary-color;
+
+    &:hover {
+      background: variables.$gray-color;
+    }
+  }
+}

@@ -1,0 +1,15 @@
+.root {
+  display: flex;
+  flex-direction: column;
+
+  gap: 20px;
+
+  > .container {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+
+    gap: 20px;
+
+    width: 100%;
+  }
+}
