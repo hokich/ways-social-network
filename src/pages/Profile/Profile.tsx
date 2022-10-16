@@ -1,11 +1,15 @@
 import styles from "./Profile.module.scss"
 
-interface ProfileProps {
+import {ProfileType} from "../../types/profile.type"
 
+interface ProfileProps {
+  profile: ProfileType
 }
 
-const Profile = ({}: ProfileProps) => (
-  <div>Profile</div>
+const Profile = ({profile}: ProfileProps) => (
+  <div className={styles.root}>
+    {profile.userId} {profile.fullName}
+  </div>
 )
 
 export default Profile

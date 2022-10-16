@@ -1,20 +1,17 @@
+import {useEffect} from "react"
 import {connect} from "react-redux"
 
-import {useEffect} from "react"
-
-import {setUsers, toggleIsFetching} from "../../redux/slices/usersSlice"
+import {getUsers} from "../../redux/slices/usersSlice"
 import PeoplesList from "./PeoplesList"
 import Preloader from "../icons/Preloader"
 import {RootState} from "../../redux/store"
 import {UserType} from "../../types/user.type"
-import {usersAPI} from "../../api/usersApi"
 
 interface PeoplesListContainerProps {
   users: UserType[]
   isFetching: boolean
   totalCount: number
-  setUsers: (value: UserType[]) => void
-  toggleIsFetching: (value: boolean) => void
+  getUsers: (currentPage: number, perPage: number) => void
 }
 
 const PeoplesListContainer = (
@@ -22,17 +19,11 @@ const PeoplesListContainer = (
     users,
     isFetching,
     totalCount,
-    setUsers,
-    toggleIsFetching,
+    getUsers
   }: PeoplesListContainerProps) => {
 
   useEffect(() => {
-    toggleIsFetching(true)
-    usersAPI.getUsers().then(data => {
-      toggleIsFetching(false)
-      setUsers(data.items)
-    })
-
+    getUsers(1, 10)
   }, [])
 
   return (
@@ -53,6 +44,5 @@ const mapStateToProps = (state: RootState) => ({
 })
 
 export default connect(mapStateToProps, {
-  setUsers,
-  toggleIsFetching
+  getUsers
 })(PeoplesListContainer)

@@ -1,4 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit"
+
+import {usersAPI} from "../../api/usersApi"
+import {AppDispatch} from "../store"
 import {UserType} from "../../types/user.type"
 
 interface InitialStateType {
@@ -15,6 +18,40 @@ const initialState: InitialStateType = {
   error: null,
   isFetching: false,
   followingInProgress: []
+}
+
+export const getUsers = (currentPage = 1, perPage = 10) => {
+  return (dispatch: AppDispatch) => {
+    dispatch(toggleIsFetching(true))
+    usersAPI.getUsers(currentPage, perPage).then(data => {
+      dispatch(toggleIsFetching(false))
+      dispatch(setUsers(data.items))
+    })
+  }
+}
+
+export const follow = (userId: number) => {
+  return (dispatch: AppDispatch) => {
+    dispatch(toggleFollowingProgress({userId, isFetching: true}))
+    usersAPI.follow(userId).then(data => {
+      if (data.resultCode === 0) {
+        dispatch(setFollow(userId))
+      }
+      dispatch(toggleFollowingProgress({userId, isFetching: false}))
+    })
+  }
+}
+
+export const unfollow = (userId: number) => {
+  return (dispatch: AppDispatch) => {
+    dispatch(toggleFollowingProgress({userId, isFetching: true}))
+    usersAPI.unfollow(userId).then(data => {
+      if (data.resultCode === 0) {
+        dispatch(setUnfollow(userId))
+      }
+      dispatch(toggleFollowingProgress({userId, isFetching: false}))
+    })
+  }
 }
 
 const usersSlice = createSlice({
@@ -34,13 +71,13 @@ const usersSlice = createSlice({
         state.followingInProgress = state.followingInProgress.filter(id => id != action.payload.userId)
       }
     },
-    follow: (state, action: { payload: number }) => {
+    setFollow: (state, action: { payload: number }) => {
       let user = state.items.find(user => user.id === action.payload)
       if (user) {
         user.followed = true
       }
     },
-    unfollow: (state, action: { payload: number }) => {
+    setUnfollow: (state, action: { payload: number }) => {
       let user = state.items.find(user => user.id === action.payload)
       if (user) {
         user.followed = false
@@ -49,6 +86,12 @@ const usersSlice = createSlice({
   }
 })
 
-export const {setUsers, toggleIsFetching, toggleFollowingProgress, follow, unfollow} = usersSlice.actions
+export const {
+  setUsers,
+  toggleIsFetching,
+  toggleFollowingProgress,
+  setFollow,
+  setUnfollow
+} = usersSlice.actions
 
 export default usersSlice.reducer
