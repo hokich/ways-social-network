@@ -6,12 +6,14 @@ import {ProfileType} from "../../types/profile.type"
 
 interface InitialStateType {
   profile: ProfileType | null
+  status: string | null
   error: string | null
   isFetching: boolean
 }
 
 const initialState: InitialStateType = {
   profile: null,
+  status: null,
   error: null,
   isFetching: false,
 }
@@ -26,12 +28,34 @@ export const getProfile = (userId: string) => {
   }
 }
 
+export const getStatus = (userId: string) => {
+  return (dispatch: AppDispatch) => {
+    profileAPI.getStatus(userId).then(data => {
+      console.log('status', data)
+      dispatch(setStatus(data))
+    })
+  }
+}
+
+export const updateStatus = (status: string | null) => {
+  return (dispatch: AppDispatch) => {
+    profileAPI.updateStatus(status).then(data => {
+      if (data.resultCode === 0) {
+        dispatch(setStatus(status))
+      }
+    })
+  }
+}
+
 const profilePageSlice = createSlice({
   name: "profilePage",
   initialState,
   reducers: {
     setProfile: (state, action: {payload: ProfileType}) => {
       state.profile = action.payload
+    },
+    setStatus: (state, action: {payload: string | null}) => {
+      state.status = action.payload
     },
     toggleIsFetching: (state, action: { payload: boolean }) => {
       state.isFetching = action.payload
@@ -41,6 +65,7 @@ const profilePageSlice = createSlice({
 
 export const {
   setProfile,
+  setStatus,
   toggleIsFetching,
 } = profilePageSlice.actions
 

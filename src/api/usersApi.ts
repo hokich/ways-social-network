@@ -7,7 +7,7 @@ type PostResponseType = {
 }
 
 export const usersAPI = {
-  getUsers(currentPage=1, perPage=10) {
+  getUsers(currentPage=1, perPage= 10) {
     return baseApi.get(`users/?page=${currentPage}&count=${perPage}`).then(response => response.data)
   },
   follow(userId: number) {
