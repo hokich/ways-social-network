@@ -56,6 +56,6 @@ button {
   @extend %app-control;
 }
 
-input {
+input[type="text"], input[type="password"] {
   @extend %app-control;
 }

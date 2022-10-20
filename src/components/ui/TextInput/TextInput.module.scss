@@ -1,0 +1,11 @@
+.root {
+  padding: 5px;
+
+  background: #FFFFFF;
+
+  &.error {
+    border: 1px solid #880000;
+
+    padding: 4px;
+  }
+}
