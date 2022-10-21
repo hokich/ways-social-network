@@ -18,5 +18,22 @@
     > .logo {
       height: 30px;
     }
+
+    > .userLayer {
+      > .userControl {
+        display: flex;
+        flex-direction: row;
+
+        gap: 10px;
+
+        > .logoutButton {
+          padding:  5px;
+
+          background: #EEEEEE;
+
+          cursor: pointer;
+        }
+      }
+    }
   }
 }

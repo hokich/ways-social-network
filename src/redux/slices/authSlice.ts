@@ -1,8 +1,9 @@
 import {createSlice} from "@reduxjs/toolkit"
 
 import {AppDispatch} from "../store"
-import {AuthMeType} from "../../types/auth.type"
 import {authAPI} from "../../api/authApi"
+import {AuthMeType} from "../../types/auth.type"
+import {LoginDataType} from "../../types/login.type"
 
 interface InitialStateType {
   me: AuthMeType | null
@@ -16,11 +17,29 @@ const initialState: InitialStateType = {
 
 export const getMe = () => {
   return (dispatch: AppDispatch) => {
-    console.log('getMe')
     authAPI.getMe().then(data => {
       if (data.resultCode === 0) {
-        console.log(data)
-        dispatch(setAuthMeData(data.data))
+        dispatch(setAuthMeData({me: data.data, isAuth: true}))
+      }
+    })
+  }
+}
+
+export const login = ({email, password, rememberMe}: LoginDataType) => {
+  return (dispatch: AppDispatch) => {
+    authAPI.login(email, password, rememberMe).then(data => {
+      if (data.resultCode === 0) {
+        dispatch(getMe())
+      }
+    })
+  }
+}
+
+export const logout = () => {
+  return (dispatch: AppDispatch) => {
+    authAPI.logout().then(data => {
+      if (data.resultCode === 0) {
+        dispatch(setAuthMeData({me: null, isAuth: false}))
       }
     })
   }
@@ -30,9 +49,9 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setAuthMeData: (state, action: {payload: AuthMeType}) => {
-      state.me = action.payload
-      state.isAuth = true
+    setAuthMeData: (state, action: {payload: InitialStateType}) => {
+      state.me = action.payload.me
+      state.isAuth = action.payload.isAuth
     },
   }
 })

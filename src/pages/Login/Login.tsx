@@ -1,14 +1,17 @@
 import styles from "./Login.module.scss"
-import LoginForm from "../../components/forms/LoginForm";
+
+import LoginForm from "../../components/forms/LoginForm"
+import {LoginDataType} from "../../types/login.type"
 
 interface LoginProps {
-
+  login: ({email, password, rememberMe}: LoginDataType) => void
 }
 
-const Login = ({}: LoginProps) => {
+const Login = ({login}: LoginProps) => {
 
   const loginFromSubmitHandler = (data: any) => {
     console.log(data)
+    login({...data})
   }
 
   return (
