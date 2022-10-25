@@ -8,6 +8,19 @@ import reportWebVitals from "./reportWebVitals"
 import {store} from "./redux/store"
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
+//
+// const router = createBrowserRouter([
+//   {
+//     path: "/",
+//     element: <App/>,
+//     // errorElement: <ErrorPage />,
+//   },
+//   {
+//     path: "/profile",
+//     element: <Profile/>
+//   }
+// ]);
+
 root.render(
   <BrowserRouter>
     <React.StrictMode>

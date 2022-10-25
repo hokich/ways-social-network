@@ -1,10 +1,10 @@
 import {baseApi} from "./base"
 
 export const profileAPI = {
-  getProfile(userId: string) {
+  getProfile(userId: number) {
     return baseApi.get(`profile/${userId}`).then(response => response.data)
   },
-  getStatus(userId: string) {
+  getStatus(userId: number) {
     return baseApi.get(`profile/status/${userId}`).then(response => response.data)
   },
   updateStatus(status: string | null) {

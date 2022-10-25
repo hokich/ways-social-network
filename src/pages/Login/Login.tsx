@@ -2,22 +2,23 @@ import styles from "./Login.module.scss"
 
 import LoginForm from "../../components/forms/LoginForm"
 import {LoginDataType} from "../../types/login.type"
+import {ErrorType} from "../../types/error.type"
 
 interface LoginProps {
-  login: ({email, password, rememberMe}: LoginDataType) => void
+  error: ErrorType | null
+  login: ({email, password, rememberMe}: LoginDataType) => any
 }
 
-const Login = ({login}: LoginProps) => {
+const Login = ({error, login}: LoginProps) => {
 
   const loginFromSubmitHandler = (data: any) => {
-    console.log(data)
     login({...data})
   }
 
   return (
     <div className={styles.root}>
       <h1>Login</h1>
-      <LoginForm onSubmit={loginFromSubmitHandler}/>
+      <LoginForm onSubmit={loginFromSubmitHandler} error={error}/>
     </div>
   )
 }

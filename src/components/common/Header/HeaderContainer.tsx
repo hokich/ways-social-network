@@ -1,15 +1,10 @@
 import {connect, ConnectedProps} from "react-redux"
 
-import {getMe, logout} from "../../../redux/slices/authSlice"
-import Header from "./Header"
 import {RootState} from "../../../redux/store"
-import {useEffect} from "react";
+import {logout} from "../../../redux/slices/authSlice"
+import Header from "./Header"
 
-const HeaderContainer = ({login, isAuth, getMe, logout}: HeaderContainerProps) => {
-
-  useEffect(() => {
-    getMe()
-  }, [])
+const HeaderContainer = ({login, isAuth, logout}: HeaderContainerProps) => {
   return <Header isAuth={isAuth} login={login} logout={logout}/>
 }
 
@@ -18,7 +13,7 @@ const mapStateToProps = (state: RootState) => ({
   isAuth: state.auth.isAuth
 })
 
-const connector = connect(mapStateToProps, {getMe, logout})
+const connector = connect(mapStateToProps, {logout})
 
 type HeaderContainerProps = ConnectedProps<typeof connector>
 

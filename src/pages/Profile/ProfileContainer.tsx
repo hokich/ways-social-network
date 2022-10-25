@@ -1,21 +1,39 @@
 import {useEffect} from "react"
-import {connect, ConnectedProps} from "react-redux"
 import {useParams} from "react-router-dom"
 
-import {RootState} from "../../redux/store"
 import {withAuthRedirect} from "../../components/hoc/withAuthRedirect"
-import {getProfile, getStatus, updateStatus} from "../../redux/slices/profilePageSlice"
+import {
+  getProfile,
+  getStatus,
+  selectIsFetching,
+  selectProfile,
+  selectStatus,
+  updateStatus
+} from "../../redux/slices/profileSlice"
 import Profile from "./Profile"
 import Preloader from "../../components/icons/Preloader"
-import {compose} from "@reduxjs/toolkit";
+import {useAppDispatch, useAppSelector} from "../../redux/hooks"
+import {selectMeUserId} from "../../redux/slices/authSlice"
 
-const ProfileContainer = ({profile, status, isFetching, getProfile, getStatus, updateStatus}: ProfileContainerProps) => {
-  const {userId} = useParams<{ userId?: string }>()
+const ProfileContainer = () => {
+  const dispatch = useAppDispatch()
+
+  const profile = useAppSelector(selectProfile)
+  const status = useAppSelector(selectStatus)
+  const isFetching = useAppSelector(selectIsFetching)
+  const meUserId = useAppSelector(selectMeUserId)
+
+  const updateStatusHandler = (status: string | null) => dispatch(updateStatus(status))
+
+  let {userId} = useParams<{ userId?: string }>()
 
   useEffect(() => {
-    if (userId) {
-      getProfile(userId)
-      getStatus(userId)
+    if (!userId && meUserId) {
+      dispatch(getProfile(meUserId))
+      dispatch(getStatus(meUserId))
+    } else {
+      dispatch(getProfile(Number(userId)))
+      dispatch(getStatus(Number(userId)))
     }
   }, [])
 
@@ -24,23 +42,10 @@ const ProfileContainer = ({profile, status, isFetching, getProfile, getStatus, u
       {(isFetching || !profile) ? (
         <Preloader width={70} height={70}/>
       ) : (
-        <Profile profile={profile} status={status} updateStatus={updateStatus}/>
+        <Profile profile={profile} status={status} updateStatus={updateStatusHandler}/>
       )}
     </>
   )
 }
 
-const mapStateToProps = (state: RootState) => ({
-  profile: state.profilePage.profile,
-  status: state.profilePage.status,
-  isFetching: state.profilePage.isFetching,
-})
-
-const connector = connect(mapStateToProps, {getProfile, getStatus, updateStatus})
-
-type ProfileContainerProps = ConnectedProps<typeof connector>
-
-export default compose(
-  connector,
-  withAuthRedirect
-)(ProfileContainer) as React.ComponentType
+export default withAuthRedirect(ProfileContainer)

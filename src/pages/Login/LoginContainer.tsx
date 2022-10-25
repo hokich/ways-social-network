@@ -6,16 +6,17 @@ import {RootState} from "../../redux/store"
 import {login} from "../../redux/slices/authSlice"
 import Login from "./Login"
 
-const LoginContainer = ({isAuth, login}: LoginContainerProps) => {
+const LoginContainer = ({isAuth, error, login}: LoginContainerProps) => {
   if (isAuth) {
-    return <Navigate to={`/profile/26134`}/>
+    return <Navigate to={`/profile`}/>
   }
 
-  return <Login login={login}/>
+  return <Login error={error} login={login}/>
 }
 
 const mapStateToProps = (state: RootState) => ({
   isAuth: state.auth.isAuth,
+  error: state.auth.error
 })
 
 const connector = connect(mapStateToProps, {login})

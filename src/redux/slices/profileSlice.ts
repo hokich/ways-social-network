@@ -1,7 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit"
 
 import {profileAPI} from "../../api/profileApi"
-import {AppDispatch} from "../store"
+import {AppDispatch, RootState} from "../store"
 import {ProfileType} from "../../types/profile.type"
 
 interface InitialStateType {
@@ -18,7 +18,7 @@ const initialState: InitialStateType = {
   isFetching: false,
 }
 
-export const getProfile = (userId: string) => {
+export const getProfile = (userId: number) => {
   return (dispatch: AppDispatch) => {
     dispatch(toggleIsFetching(true))
     profileAPI.getProfile(userId).then(data => {
@@ -28,7 +28,7 @@ export const getProfile = (userId: string) => {
   }
 }
 
-export const getStatus = (userId: string) => {
+export const getStatus = (userId: number) => {
   return (dispatch: AppDispatch) => {
     profileAPI.getStatus(userId).then(data => {
       console.log('status', data)
@@ -47,7 +47,7 @@ export const updateStatus = (status: string | null) => {
   }
 }
 
-const profilePageSlice = createSlice({
+const profileSlice = createSlice({
   name: "profilePage",
   initialState,
   reducers: {
@@ -63,10 +63,16 @@ const profilePageSlice = createSlice({
   }
 })
 
+export const selectProfile = (state: RootState) => state.profile.profile
+
+export const selectStatus = (state: RootState) => state.profile.status
+
+export const selectIsFetching = (state: RootState) => state.profile.isFetching
+
 export const {
   setProfile,
   setStatus,
   toggleIsFetching,
-} = profilePageSlice.actions
+} = profileSlice.actions
 
-export default profilePageSlice.reducer
+export default profileSlice.reducer

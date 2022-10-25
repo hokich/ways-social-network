@@ -1,13 +1,15 @@
 import {configureStore} from "@reduxjs/toolkit"
 
+import appReducer from "./slices/appSlice"
 import usersReducer from "./slices/usersSlice"
-import profilePageReducer from "./slices/profilePageSlice"
+import profilePageReducer from "./slices/profileSlice"
 import authReducer from "./slices/authSlice"
 
 export const store = configureStore({
   reducer: {
+    app: appReducer,
     users: usersReducer,
-    profilePage: profilePageReducer,
+    profile: profilePageReducer,
     auth: authReducer
   }
 })

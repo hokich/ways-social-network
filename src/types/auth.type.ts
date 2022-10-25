@@ -1,5 +1,5 @@
 export type AuthMeType = {
-  userId: number
+  id: number
   email: string
   login: string
 }
