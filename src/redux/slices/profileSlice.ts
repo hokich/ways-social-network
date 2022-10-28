@@ -31,7 +31,6 @@ export const getProfile = (userId: number) => {
 export const getStatus = (userId: number) => {
   return (dispatch: AppDispatch) => {
     profileAPI.getStatus(userId).then(data => {
-      console.log('status', data)
       dispatch(setStatus(data))
     })
   }

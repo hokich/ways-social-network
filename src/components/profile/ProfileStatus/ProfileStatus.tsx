@@ -1,6 +1,6 @@
 import styles from "./ProfileStatus.module.scss"
 
-import {ChangeEvent, useState} from "react"
+import {ChangeEvent, useEffect, useState} from "react"
 
 interface ProfileStatusProps {
   status: string | null
@@ -11,11 +11,17 @@ const ProfileStatus = ({status, updateStatus}: ProfileStatusProps) => {
   const [editMode, setEditMode] = useState(false)
   const [currentStatus, setCurrentStatus] = useState(status)
 
-  const activateEditMode = () => setEditMode(true)
+  useEffect(() => {
+    setCurrentStatus(status)
+  }, [status])
+
+  const activateEditMode = () => {
+    setEditMode(true)
+  }
 
   const deactivateEditMode = () => {
-    updateStatus(currentStatus)
     setEditMode(false)
+    updateStatus(currentStatus)
   }
 
   const changeStatusHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -27,7 +33,14 @@ const ProfileStatus = ({status, updateStatus}: ProfileStatusProps) => {
       {!editMode ? (
         <span onClick={activateEditMode}>{status || "Добавить статус"}</span>
       ) : (
-        <input type="text" value={currentStatus ? currentStatus : ""} onChange={changeStatusHandler} onBlur={deactivateEditMode} autoFocus style={{background: "#FFFFFF"}}/>
+        <input
+          type="text"
+          value={currentStatus ? currentStatus : ""}
+          onChange={changeStatusHandler}
+          onBlur={deactivateEditMode}
+          style={{background: "#FFFFFF"}}
+          autoFocus
+        />
       )}
     </>
   )

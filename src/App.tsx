@@ -1,7 +1,7 @@
 import "./styles/globals.scss"
 
-import React, {useEffect} from "react"
-import {Routes, Route} from "react-router-dom"
+import React, { useEffect } from "react"
+import { Routes, Route } from "react-router-dom"
 
 import {initializeApp, selectAppInitialized} from "./redux/slices/appSlice"
 import Layout from "./components/common/Layout"
@@ -24,22 +24,34 @@ const App = () => {
   }, [])
 
   if (!initialized) {
-    return <div style={{width: "100%", height: "100vh", display: "flex", justifyContent: "center", alignItems: "center"}}><Preloader width={200} height={200}/></div>
+    return (
+      <div
+        style={{
+          width: "100%",
+          height: "100vh",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Preloader width={200} height={200} />
+      </div>
+    )
   }
 
   return (
     <Layout>
       <Routes>
-        <Route path={""} element={<Home/>}/>
-        <Route path={"/messages"} element={<Messages/>}/>
-        <Route path={"/profile/:userId"} element={<Profile/>}/>
-        <Route path={"/profile"} element={<Profile/>}/>
-        <Route path={"/friends"} element={<Friends/>}/>
-        <Route path={"/peoples"} element={<Peoples/>}/>
-        <Route path={"/login"} element={<Login/>}/>
+        <Route path={""} element={<Home />} />
+        <Route path={"/messages"} element={<Messages />} />
+        <Route path={"/profile/:userId"} element={<Profile />} />
+        <Route path={"/profile"} element={<Profile />} />
+        <Route path={"/friends"} element={<Friends />} />
+        <Route path={"/peoples"} element={<Peoples />} />
+        <Route path={"/login"} element={<Login />} />
       </Routes>
     </Layout>
-  );
+  )
 }
 
 export default App

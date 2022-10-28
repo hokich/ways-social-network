@@ -35,7 +35,7 @@ const ProfileContainer = () => {
       dispatch(getProfile(Number(userId)))
       dispatch(getStatus(Number(userId)))
     }
-  }, [])
+  }, [userId, meUserId, dispatch])
 
   return (
     <>
