@@ -1,9 +1,16 @@
 import "./styles/globals.scss"
 
-import React, { useEffect } from "react"
-import { Routes, Route } from "react-router-dom"
+import React, {useEffect} from "react"
+import {Routes, Route} from "react-router-dom"
 
-import {initializeApp, selectAppInitialized} from "./redux/slices/appSlice"
+import {
+  useAppDispatch,
+  useAppSelector
+} from "./redux/hooks"
+import {
+  initializeApp,
+  selectAppInitialized
+} from "./redux/slices/appSlice"
 import Layout from "./components/common/Layout"
 import Home from "./pages/Home"
 import Friends from "./pages/Friends"
@@ -12,7 +19,6 @@ import Profile from "./pages/Profile"
 import Peoples from "./pages/Peoples"
 import Login from "./pages/Login"
 import Preloader from "./components/icons/Preloader"
-import {useAppDispatch, useAppSelector} from "./redux/hooks"
 
 const App = () => {
   const dispatch = useAppDispatch()
@@ -21,7 +27,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(initializeApp())
-  }, [])
+  }, [dispatch])
 
   if (!initialized) {
     return (
@@ -34,7 +40,7 @@ const App = () => {
           alignItems: "center",
         }}
       >
-        <Preloader width={200} height={200} />
+        <Preloader width={200} height={200}/>
       </div>
     )
   }
@@ -42,13 +48,13 @@ const App = () => {
   return (
     <Layout>
       <Routes>
-        <Route path={""} element={<Home />} />
-        <Route path={"/messages"} element={<Messages />} />
-        <Route path={"/profile/:userId"} element={<Profile />} />
-        <Route path={"/profile"} element={<Profile />} />
-        <Route path={"/friends"} element={<Friends />} />
-        <Route path={"/peoples"} element={<Peoples />} />
-        <Route path={"/login"} element={<Login />} />
+        <Route path={""} element={<Home/>}/>
+        <Route path={"/messages"} element={<Messages/>}/>
+        <Route path={"/profile/:userId"} element={<Profile/>}/>
+        <Route path={"/profile"} element={<Profile/>}/>
+        <Route path={"/friends"} element={<Friends/>}/>
+        <Route path={"/peoples"} element={<Peoples/>}/>
+        <Route path={"/login"} element={<Login/>}/>
       </Routes>
     </Layout>
   )
