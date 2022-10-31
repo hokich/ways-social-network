@@ -1,0 +1,18 @@
+.root {
+  display: flex;
+
+  width: 100%;
+
+  &.round {
+    border-radius: 50%;
+
+    overflow: hidden;
+  }
+
+  .image {
+    width: 100%;
+    height: unset;
+
+    object-fit: contain;
+  }
+}
