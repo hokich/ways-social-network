@@ -4,7 +4,7 @@ import {useParams} from "react-router-dom"
 import {withAuthRedirect} from "../../components/hoc/withAuthRedirect"
 import {
   getProfile,
-  getStatus,
+  getStatus, savePhoto,
   selectIsFetching,
   selectProfile,
   selectStatus,
@@ -23,7 +23,13 @@ const ProfileContainer = () => {
   const isFetching = useAppSelector(selectIsFetching)
   const meUserId = useAppSelector(selectMeUserId)
 
-  const updateStatusHandler = (status: string | null) => dispatch(updateStatus(status))
+  const updateStatusHandler = (status: string | null) => {
+    dispatch(updateStatus(status))
+  }
+
+  const savePhotoHandler = (photo: File) => {
+    dispatch(savePhoto(photo))
+  }
 
   let {userId} = useParams<{ userId?: string }>()
 
@@ -42,7 +48,13 @@ const ProfileContainer = () => {
       {(isFetching || !profile) ? (
         <Preloader width={70} height={70}/>
       ) : (
-        <Profile profile={profile} status={status} updateStatus={updateStatusHandler}/>
+        <Profile
+          profile={profile}
+          status={status}
+          isOwner={!userId}
+          updateStatus={updateStatusHandler}
+          savePhoto={savePhotoHandler}
+        />
       )}
     </>
   )

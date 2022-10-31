@@ -3,6 +3,7 @@ import {createSlice} from "@reduxjs/toolkit"
 import {profileAPI} from "../../api/profileApi"
 import {AppDispatch, RootState} from "../store"
 import {ProfileType} from "../../types/profile.type"
+import {PhotosType} from "../../types/photos.type";
 
 interface InitialStateType {
   profile: ProfileType | null
@@ -46,19 +47,34 @@ export const updateStatus = (status: string | null) => {
   }
 }
 
+export const savePhoto = (photo: File) => {
+  return (dispatch: AppDispatch) => {
+    profileAPI.savePhoto(photo).then(data => {
+      if (data.resultCode === 0) {
+        dispatch(savePhotoSuccess(data.data.photos))
+      }
+    })
+  }
+}
+
 const profileSlice = createSlice({
   name: "profilePage",
   initialState,
   reducers: {
-    setProfile: (state, action: {payload: ProfileType}) => {
+    setProfile: (state, action: { payload: ProfileType }) => {
       state.profile = action.payload
     },
-    setStatus: (state, action: {payload: string | null}) => {
+    setStatus: (state, action: { payload: string | null }) => {
       state.status = action.payload
     },
     toggleIsFetching: (state, action: { payload: boolean }) => {
       state.isFetching = action.payload
     },
+    savePhotoSuccess: (state, action: { payload: PhotosType }) => {
+      if (state.profile) {
+        state.profile.photos = action.payload
+      }
+    }
   }
 })
 
@@ -72,6 +88,7 @@ export const {
   setProfile,
   setStatus,
   toggleIsFetching,
+  savePhotoSuccess,
 } = profileSlice.actions
 
 export default profileSlice.reducer

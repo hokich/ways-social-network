@@ -1,6 +1,31 @@
 .root {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
 
-  gap: 20px;
+  gap: 70px;
+
+  > .avatar {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+
+    > .image {
+      width: 250px;
+    }
+  }
+
+  > .mainInfo {
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+
+    > .nameText {
+      font-size: 32px;
+      font-weight: 600;
+
+      color: #34414a;
+    }
+  }
 }

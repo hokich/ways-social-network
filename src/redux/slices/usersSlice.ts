@@ -1,7 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit"
 
 import {usersAPI} from "../../api/usersApi"
-import {AppDispatch} from "../store"
+import {AppDispatch, RootState} from "../store"
 import {UserType} from "../../types/user.type"
 
 interface InitialStateType {
@@ -85,6 +85,26 @@ const usersSlice = createSlice({
     }
   }
 })
+
+export const selectUsersList = (state: RootState) => {
+  return state.users.items
+}
+
+export const selectUsersTotalCount = (state: RootState) => {
+  return state.users.totalCount
+}
+
+export const selectUsersRequestError = (state: RootState) => {
+  return state.users.error
+}
+
+export const selectUsersIsFetching = (state: RootState) => {
+  return state.users.isFetching
+}
+
+export const selectUsersFollowingInProgress = (state: RootState) => {
+  return state.users.followingInProgress
+}
 
 export const {
   setUsers,
