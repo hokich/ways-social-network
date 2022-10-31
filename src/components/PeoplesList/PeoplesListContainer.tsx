@@ -1,30 +1,26 @@
 import {useEffect} from "react"
-import {connect} from "react-redux"
 
-import {getUsers} from "../../redux/slices/usersSlice"
+import {
+  useAppDispatch,
+  useAppSelector
+} from "../../redux/hooks"
+import {
+  getUsers,
+  selectUsersIsFetching,
+  selectUsersList
+} from "../../redux/slices/usersSlice"
 import PeoplesList from "./PeoplesList"
 import Preloader from "../icons/Preloader"
-import {RootState} from "../../redux/store"
-import {UserType} from "../../types/user.type"
 
-interface PeoplesListContainerProps {
-  users: UserType[]
-  isFetching: boolean
-  totalCount: number
-  getUsers: (currentPage: number, perPage: number) => void
-}
+const PeoplesListContainer = () => {
+  const dispatch = useAppDispatch()
 
-const PeoplesListContainer = (
-  {
-    users,
-    isFetching,
-    totalCount,
-    getUsers
-  }: PeoplesListContainerProps) => {
+  const users = useAppSelector(selectUsersList)
+  const isFetching = useAppSelector(selectUsersIsFetching)
 
   useEffect(() => {
-    getUsers(1, 10)
-  }, [])
+    dispatch(getUsers(3, 26))
+  }, [dispatch])
 
   return (
     <>
@@ -37,12 +33,4 @@ const PeoplesListContainer = (
   )
 }
 
-const mapStateToProps = (state: RootState) => ({
-  users: state.users.items,
-  isFetching: state.users.isFetching,
-  totalCount: state.users.totalCount
-})
-
-export default connect(mapStateToProps, {
-  getUsers
-})(PeoplesListContainer)
+export default PeoplesListContainer

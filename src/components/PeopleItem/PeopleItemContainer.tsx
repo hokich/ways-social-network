@@ -29,11 +29,7 @@ const PeopleItemContainer = (
   }
 
   return <PeopleItem
-    id={user.id}
-    name={user.name}
-    status={user.status}
-    followed={user.followed}
-    photo={user.photos.small}
+    user={user}
     isLoading={followingInProgress.some(id => id === user.id)}
     follow={followHandler}
     unfollow={unfollowHandler}

@@ -2,10 +2,7 @@ import styles from "./Peoples.module.scss"
 
 import PeoplesList from "../../components/PeoplesList"
 
-interface PeoplesProps {
-}
-
-const Peoples = ({}: PeoplesProps) => (
+const Peoples = () => (
   <div className={styles.root}>
     <PeoplesList/>
   </div>
