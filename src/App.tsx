@@ -55,6 +55,7 @@ const App = () => {
         <Route path={"/friends"} element={<Friends/>}/>
         <Route path={"/peoples"} element={<Peoples/>}/>
         <Route path={"/login"} element={<Login/>}/>
+        <Route path={"*"} element={<div>404</div>}/>
       </Routes>
     </Layout>
   )
